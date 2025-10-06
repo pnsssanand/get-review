@@ -1,0 +1,49 @@
+/* Site Footer - Clean and Professional */
+
+.site-footer {
+  width: 100%;
+  padding: 20px 0;
+  background-color: #ffffff;
+  border-top: 1px solid #e5e7eb;
+  text-align: center;
+  color: #4b5563;
+  font-size: 0.95rem;
+  font-weight: 500;
+  position: relative;
+  bottom: 0;
+  left: 0;
+  margin-top: 3rem;
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.site-footer p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.site-footer strong {
+  color: #111827;
+  font-weight: 700;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .site-footer {
+    padding: 16px 0;
+    font-size: 0.875rem;
+  }
+}
+
+/* Light theme compatibility */
+.profile-light-theme .site-footer {
+  background-color: #ffffff;
+  border-top-color: #e5e7eb;
+}
+
+.profile-light-theme .site-footer p {
+  color: #4b5563;
+}
+
+.profile-light-theme .site-footer strong {
+  color: #111827;
+}

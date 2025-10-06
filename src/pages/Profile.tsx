@@ -5,11 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
-import { Sparkles, CheckCircle2, ExternalLink, ArrowLeft, Trophy, Target } from "lucide-react";
+import { Sparkles, CheckCircle2, ExternalLink, ArrowLeft, Trophy, Target, Edit } from "lucide-react";
 import { motion } from "framer-motion";
 import SocialIcon from "@/components/SocialIcons";
 import Confetti from "@/components/Confetti";
 import ShareProfile from "@/components/ShareProfile";
+import Footer from "@/components/Footer";
+import "./ProfileLight.css";
 
 const Profile = () => {
   const { userId } = useParams();
@@ -117,20 +119,35 @@ const Profile = () => {
   const largeTasks = links.filter((l) => !l.is_small_task);
   const progress = calculateProgress();
 
+  // Check if the current user is the owner of this profile
+  const isOwner = currentUser?.id === userId;
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen profile-light-theme">
       <Confetti trigger={showConfetti} />
-      <nav className="border-b border-border/50 backdrop-blur-sm bg-card/30 sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
+      <nav className="border-b border-border/50 backdrop-blur-sm bg-white/80 sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => navigate("/")}
-            className="hover:bg-accent/10"
+            className="hover:bg-gray-100"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Home
           </Button>
+          
+          {isOwner && (
+            <Button
+              variant="default"
+              size="sm"
+              onClick={() => navigate("/dashboard")}
+              className="bg-gradient-to-r from-amber-500 to-purple-600 hover:from-amber-600 hover:to-purple-700 text-white"
+            >
+              <Edit className="h-4 w-4 mr-2" />
+              Back to Profile Editor
+            </Button>
+          )}
         </div>
       </nav>
 
@@ -163,7 +180,7 @@ const Profile = () => {
                 </motion.div>
 
                 <motion.h1
-                  className="text-4xl font-bold mb-2 bg-gradient-luxury bg-clip-text text-transparent"
+                  className="text-4xl font-bold mb-2 text-gray-900"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.3 }}
@@ -172,7 +189,7 @@ const Profile = () => {
                 </motion.h1>
                 {profile?.business_name && (
                   <motion.p
-                    className="text-xl text-muted-foreground"
+                    className="text-xl text-gray-600"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.4 }}
@@ -198,160 +215,84 @@ const Profile = () => {
             </Card>
           </motion.div>
 
-          {/* Progress Card */}
-          {currentUser && currentUser.id !== userId && links.length > 0 && (
+          {/* Featured Platforms - Show only icons + platform names */}
+          {links.length > 0 && (
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-            >
-              <Card className="p-6 mb-8 backdrop-blur-sm bg-card/50 border-border/50">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-2">
-                    <Trophy className="h-6 w-6 text-primary" />
-                    <h3 className="text-xl font-bold">Your Progress</h3>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Target className="h-5 w-5 text-muted-foreground" />
-                    <span className="text-lg font-semibold">
-                      {completions.length} / {links.length}
-                    </span>
-                  </div>
-                </div>
-                <Progress value={progress} className="h-3 mb-2" />
-                <p className="text-sm text-muted-foreground text-center">
-                  {progress === 100 ? (
-                    <span className="text-green-500 font-semibold flex items-center justify-center gap-2">
-                      <CheckCircle2 className="h-4 w-4" />
-                      All tasks completed! Amazing! 🎉
-                    </span>
-                  ) : (
-                    `${progress}% Complete - Keep going!`
-                  )}
-                </p>
-              </Card>
-            </motion.div>
-          )}
-
-          {/* Small Tasks */}
-          {smallTasks.length > 0 && (
-            <motion.div
-              className="mb-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
             >
-              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-                <Sparkles className="h-6 w-6 text-primary" />
-                Quick Actions
-              </h2>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                {smallTasks.map((link, index) => (
-                  <motion.button
-                    key={link.id}
-                    onClick={() => handleLinkClick(link)}
-                    className={`group relative p-6 rounded-xl backdrop-blur-sm border transition-all ${
-                      isCompleted(link.id)
-                        ? "bg-green-500/10 border-green-500/50 shadow-glow"
-                        : "bg-card/50 border-border/50 hover:shadow-glow"
-                    }`}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: index * 0.1 }}
-                    whileHover={{ scale: 1.05, y: -5 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <div className="flex flex-col items-center gap-2">
-                      <div className={`p-3 rounded-full transition-all ${
-                        isCompleted(link.id)
-                          ? "bg-green-500/20"
-                          : "bg-gradient-luxury group-hover:scale-110"
-                      }`}>
-                        <SocialIcon platform={link.platform} size={24} />
-                      </div>
-                      <span className="text-sm font-medium">{link.platform}</span>
-                      {isCompleted(link.id) && (
-                        <motion.div
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          transition={{ type: "spring", stiffness: 500, damping: 15 }}
-                        >
-                          <CheckCircle2 className="absolute top-2 right-2 h-5 w-5 text-green-500" />
-                        </motion.div>
-                      )}
-                    </div>
-                  </motion.button>
-                ))}
-              </div>
-            </motion.div>
-          )}
-
-          {/* Large Tasks */}
-          {largeTasks.length > 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-            >
-              <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-                <Sparkles className="h-6 w-6 text-primary" />
-                Featured Links
-              </h2>
-              <div className="space-y-4">
-                {largeTasks.map((link, index) => (
-                  <motion.button
-                    key={link.id}
-                    onClick={() => handleLinkClick(link)}
-                    className={`group relative w-full p-6 rounded-xl backdrop-blur-sm border transition-all text-left ${
-                      isCompleted(link.id)
-                        ? "bg-green-500/10 border-green-500/50 shadow-glow"
-                        : "bg-card/50 border-border/50 hover:shadow-glow"
-                    }`}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    whileHover={{ scale: 1.02, x: 10 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
-                        <div className={`p-3 rounded-full transition-all ${
-                          isCompleted(link.id)
-                            ? "bg-green-500/20"
-                            : "bg-gradient-luxury group-hover:scale-110"
-                        }`}>
-                          <SocialIcon platform={link.platform} size={24} />
+              <Card className="p-8 bg-white border-gray-200 shadow-sm">
+                <h3 className="text-2xl font-bold mb-6 text-gray-900 text-center">
+                  Featured Platforms
+                </h3>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                  {links.map((link, index) => (
+                    <motion.button
+                      key={link.id}
+                      onClick={() => handleLinkClick(link)}
+                      className="social-link-button"
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: index * 0.05 }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <div className="flex flex-col items-center gap-2 p-4">
+                        <div className="social-icon-wrapper">
+                          <SocialIcon platform={link.platform} size={28} />
                         </div>
-                        <div>
-                          <h3 className="font-bold text-lg">{link.platform}</h3>
-                          <p className="text-sm text-muted-foreground truncate max-w-xs">
-                            {link.url}
-                          </p>
-                        </div>
+                        <span className="social-label">{link.platform}</span>
                       </div>
-                      {isCompleted(link.id) && (
-                        <motion.div
-                          initial={{ scale: 0, rotate: -180 }}
-                          animate={{ scale: 1, rotate: 0 }}
-                          transition={{ type: "spring", stiffness: 500, damping: 15 }}
-                        >
-                          <CheckCircle2 className="h-6 w-6 text-green-500" />
-                        </motion.div>
-                      )}
-                    </div>
-                  </motion.button>
-                ))}
-              </div>
+                    </motion.button>
+                  ))}
+                </div>
+              </Card>
             </motion.div>
           )}
 
           {links.length === 0 && (
-            <Card className="p-12 text-center backdrop-blur-sm bg-card/50 border-border/50">
-              <p className="text-muted-foreground">No links added yet</p>
-            </Card>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+            >
+              <Card className="p-8 text-center bg-white border-gray-200 shadow-sm">
+                <p className="text-gray-600 text-lg">
+                  Welcome to {profile?.full_name}'s profile! 
+                </p>
+                {profile?.business_name && (
+                  <p className="text-gray-500 mt-2">
+                    Check out their business: {profile.business_name}
+                  </p>
+                )}
+              </Card>
+            </motion.div>
+          )}
+
+          {/* Back to Profile Editor button at bottom (for owner only) */}
+          {isOwner && (
+            <motion.div
+              className="mt-8 text-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8 }}
+            >
+              <Button
+                variant="outline"
+                onClick={() => navigate("/dashboard")}
+                className="border-gray-300 text-gray-700 hover:bg-gray-50"
+              >
+                <Edit className="h-4 w-4 mr-2" />
+                Back to Profile Editor
+              </Button>
+            </motion.div>
           )}
         </div>
       </div>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

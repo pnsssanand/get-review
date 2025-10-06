@@ -1,0 +1,298 @@
+/* Light Theme for Profile Page */
+/* This stylesheet overrides the default dark theme for a clean, professional white background */
+
+.profile-light-theme {
+  background-color: #ffffff;
+  color: #111111;
+  min-height: 100vh;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Override background colors */
+.profile-light-theme,
+.profile-light-theme body,
+.profile-light-theme html {
+  background-color: #ffffff !important;
+}
+
+/* Navigation header styling */
+.profile-light-theme nav {
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #e5e5e5;
+}
+
+/* Button styling for light theme */
+.profile-light-theme .back-button,
+.profile-light-theme .edit-profile-button {
+  background: #f5f5f5;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.profile-light-theme .back-button:hover,
+.profile-light-theme .edit-profile-button:hover {
+  background: #e5e7eb;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Card styling for light theme */
+.profile-light-theme .card,
+.profile-light-theme [class*="card"] {
+  background-color: #ffffff !important;
+  border: 1px solid #e5e5e5 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Profile image ring */
+.profile-light-theme .ring-4 {
+  --tw-ring-color: rgb(245 158 11 / 0.5);
+}
+
+/* Text colors */
+.profile-light-theme h1,
+.profile-light-theme h2,
+.profile-light-theme h3 {
+  color: #111111;
+  background: none;
+  background-color: transparent;
+  background-image: none;
+}
+
+.profile-light-theme p {
+  color: #6b7280;
+  background: none;
+  background-color: transparent;
+  background-image: none;
+}
+
+/* Text color overrides - NO gradients on text */
+.profile-light-theme .text-gray-900 {
+  color: #111827 !important;
+  background: none !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: unset !important;
+  background-clip: unset !important;
+}
+
+.profile-light-theme .text-gray-600 {
+  color: #4b5563 !important;
+  background: none !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: unset !important;
+  background-clip: unset !important;
+}
+
+/* Gradient preserved for avatar only (not text) */
+.profile-light-theme .bg-gradient-luxury {
+  background: linear-gradient(135deg, #f59e0b, #a855f7);
+}
+
+.profile-light-theme .text-muted-foreground {
+  color: #6b7280 !important;
+  background: none !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Share button styling */
+.profile-light-theme button[class*="Share"] {
+  background-color: #f9fafb;
+  border: 1px solid #d1d5db;
+}
+
+.profile-light-theme button[class*="Share"]:hover {
+  background-color: #f3f4f6;
+}
+
+/* Welcome card styling */
+.profile-light-theme .bg-white {
+  background-color: #ffffff;
+}
+
+.profile-light-theme .border-gray-200 {
+  border-color: #e5e7eb;
+}
+
+.profile-light-theme .text-gray-600 {
+  color: #4b5563;
+}
+
+.profile-light-theme .text-gray-500 {
+  color: #6b7280;
+}
+
+.profile-light-theme .shadow-sm {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Override any dark mode elements */
+.profile-light-theme [class*="bg-card"],
+.profile-light-theme [class*="backdrop-blur"] {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.profile-light-theme [class*="border-border"] {
+  border-color: #e5e7eb !important;
+}
+
+/* Ensure all text is readable on white background */
+.profile-light-theme * {
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+/* Profile logo background */
+.profile-light-theme .bg-gradient-luxury {
+  background: linear-gradient(135deg, #f59e0b, #a855f7);
+}
+
+/* Shadow effects for light theme */
+.profile-light-theme .shadow-elegant,
+.profile-light-theme .shadow-glow {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .profile-light-theme {
+    padding: 1rem;
+  }
+}
+
+/* Smooth transitions for all interactive elements */
+.profile-light-theme button,
+.profile-light-theme a,
+.profile-light-theme [role="button"] {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Focus states for accessibility */
+.profile-light-theme button:focus,
+.profile-light-theme a:focus {
+  outline: 2px solid #f59e0b;
+  outline-offset: 2px;
+}
+
+/* Loading state */
+.profile-light-theme .animate-pulse {
+  color: #f59e0b;
+}
+
+/* ========================================
+   SOCIAL LINK BUTTONS - ICON + NAME ONLY
+   ======================================== */
+
+/* Social link button container - shows ONLY icon + platform name (NO URLs) */
+.profile-light-theme .social-link-button {
+  background: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-light-theme .social-link-button:hover {
+  background: #f0f1f3;
+  border-color: #d1d5db;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
+}
+
+.profile-light-theme .social-link-button:active {
+  transform: translateY(0);
+}
+
+/* Icon wrapper styling - White circular background for better visibility */
+.profile-light-theme .social-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #ffffff; /* Clean white background for icon visibility */
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.08); /* Subtle shadow for depth */
+  border: 1px solid rgba(0, 0, 0, 0.05); /* Very subtle border for definition */
+  color: #444; /* Default icon color */
+  margin-bottom: 4px;
+  transition: all 0.2s ease;
+}
+
+/* Icon hover effect - Enhanced visibility on interaction */
+.profile-light-theme .social-link-button:hover .social-icon-wrapper {
+  transform: scale(1.08);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.12);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Platform label styling - ONLY shows platform name */
+.profile-light-theme .social-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1f2937;
+  text-align: center;
+  line-height: 1.2;
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+/* Featured Platforms heading */
+.profile-light-theme h3 {
+  color: #111827;
+  font-weight: 700;
+}
+
+/* Grid layout for social buttons */
+.profile-light-theme .grid {
+  gap: 1rem;
+}
+
+/* Responsive adjustments for social buttons */
+@media (max-width: 640px) {
+  .profile-light-theme .social-link-button {
+    min-height: 90px;
+  }
+  
+  .profile-light-theme .social-icon-wrapper {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .profile-light-theme .social-label {
+    font-size: 0.75rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .profile-light-theme .social-link-button {
+    min-height: 110px;
+  }
+}
+
+/* Bottom editor button styling */
+.profile-light-theme .border-gray-300 {
+  border-color: #d1d5db;
+}
+
+.profile-light-theme .text-gray-700 {
+  color: #374151;
+}
+
+.profile-light-theme .hover\:bg-gray-50:hover {
+  background-color: #f9fafb;
+}
