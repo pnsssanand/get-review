@@ -7,6 +7,17 @@ import Footer from "@/components/Footer";
 import ShareProfile from "@/components/ShareProfile";
 
 const Index = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Detect mobile device
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
   const [loading] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const containerRef = useRef(null);
@@ -135,19 +146,21 @@ const Index = () => {
         <div className="absolute bottom-20 left-1/2 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000" />
       </motion.div>
 
-      {/* Cursor Glow Effect */}
-      <motion.div
-        className="pointer-events-none fixed w-96 h-96 rounded-full bg-gradient-radial from-purple-500/20 to-transparent blur-3xl"
-        animate={{
-          x: mousePosition.x - 192,
-          y: mousePosition.y - 192,
-        }}
-        transition={{ type: "spring", stiffness: 50, damping: 20 }}
-      />
+      {/* Cursor Glow Effect - desktop only */}
+      {!isMobile && (
+        <motion.div
+          className="pointer-events-none fixed w-96 h-96 rounded-full bg-gradient-radial from-purple-500/20 to-transparent blur-3xl"
+          animate={{
+            x: mousePosition.x - 192,
+            y: mousePosition.y - 192,
+          }}
+          transition={{ type: "spring", stiffness: 50, damping: 20 }}
+        />
+      )}
 
-      {/* Floating Particles */}
+      {/* Floating Particles - fewer on mobile */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(30)].map((_, i) => (
+        {[...Array(isMobile ? 10 : 30)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-yellow-400/40 rounded-full"
@@ -155,14 +168,16 @@ const Index = () => {
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
             }}
-            animate={{
+            animate={!isMobile ? {
               y: [0, -50, 0],
               x: [0, Math.random() * 30 - 15, 0],
               opacity: [0.2, 0.8, 0.2],
               scale: [1, 1.5, 1],
+            } : {
+              opacity: [0.2, 0.5, 0.2],
             }}
             transition={{
-              duration: 4 + Math.random() * 3,
+              duration: isMobile ? 6 : 4 + Math.random() * 3,
               repeat: Infinity,
               delay: Math.random() * 5,
               ease: "easeInOut",
@@ -183,48 +198,49 @@ const Index = () => {
               {/* Animated Border Glow */}
               <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-yellow-400 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-700" />
               
-              {/* Shimmer Effect */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
-                animate={{ x: ["-100%", "200%"] }}
-                transition={{ duration: 3, repeat: Infinity, repeatDelay: 1 }}
-              />
+              {/* Shimmer Effect - desktop only */}
+              {!isMobile && (
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+                  animate={{ x: ["-100%", "200%"] }}
+                  transition={{ duration: 3, repeat: Infinity, repeatDelay: 1 }}
+                />
+              )}
 
               <div className="flex flex-col items-center text-center relative z-10">
                 {/* Profile Avatar with 3D Effect */}
                 <motion.div
-                  initial={{ scale: 0, rotate: -180 }}
+                  initial={!isMobile ? { scale: 0, rotate: -180 } : { scale: 1, rotate: 0 }}
                   animate={{ scale: 1, rotate: 0 }}
-                  transition={{ 
+                  transition={!isMobile ? { 
                     type: "spring", 
                     stiffness: 200, 
                     delay: 0.2,
                     duration: 1
-                  }}
-                  whileHover={{ 
-                    scale: 1.1, 
-                    rotate: 5,
-                    transition: { duration: 0.3 }
-                  }}
+                  } : { duration: 0 }}
                   className="relative mb-8"
                 >
-                  {/* Pulsing Rings */}
-                  <motion.div
-                    className="absolute inset-0 rounded-3xl bg-gradient-to-r from-yellow-400 to-purple-600"
-                    animate={{
-                      scale: [1, 1.3, 1],
-                      opacity: [0.5, 0, 0.5],
-                    }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  />
-                  <motion.div
-                    className="absolute inset-0 rounded-3xl bg-gradient-to-r from-pink-400 to-yellow-600"
-                    animate={{
-                      scale: [1, 1.5, 1],
-                      opacity: [0.3, 0, 0.3],
-                    }}
-                    transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-                  />
+                  {/* Pulsing Rings - reduced on mobile */}
+                  {!isMobile && (
+                    <>
+                      <motion.div
+                        className="absolute inset-0 rounded-3xl bg-gradient-to-r from-yellow-400 to-purple-600"
+                        animate={{
+                          scale: [1, 1.3, 1],
+                          opacity: [0.5, 0, 0.5],
+                        }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      />
+                      <motion.div
+                        className="absolute inset-0 rounded-3xl bg-gradient-to-r from-pink-400 to-yellow-600"
+                        animate={{
+                          scale: [1, 1.5, 1],
+                          opacity: [0.3, 0, 0.3],
+                        }}
+                        transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                      />
+                    </>
+                  )}
 
                   {profile?.profile_image_url ? (
                     <div className="w-48 h-48 rounded-3xl bg-white/95 backdrop-blur-xl flex items-center justify-center p-6 ring-8 ring-yellow-400/50 shadow-2xl relative z-10">
@@ -240,26 +256,30 @@ const Index = () => {
                     </div>
                   )}
 
-                  {/* Floating Icons */}
-                  <motion.div
-                    className="absolute -top-2 -right-2"
-                    animate={{ y: [0, -10, 0], rotate: [0, 10, 0] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    <Star className="w-8 h-8 text-yellow-400 fill-yellow-400" />
-                  </motion.div>
-                  <motion.div
-                    className="absolute -bottom-2 -left-2"
-                    animate={{ y: [0, 10, 0], rotate: [0, -10, 0] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-                  >
-                    <Zap className="w-8 h-8 text-purple-400 fill-purple-400" />
-                  </motion.div>
+                  {/* Floating Icons - desktop only */}
+                  {!isMobile && (
+                    <>
+                      <motion.div
+                        className="absolute -top-2 -right-2"
+                        animate={{ y: [0, -10, 0], rotate: [0, 10, 0] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                      >
+                        <Star className="w-8 h-8 text-yellow-400 fill-yellow-400" />
+                      </motion.div>
+                      <motion.div
+                        className="absolute -bottom-2 -left-2"
+                        animate={{ y: [0, 10, 0], rotate: [0, -10, 0] }}
+                        transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+                      >
+                        <Zap className="w-8 h-8 text-purple-400 fill-purple-400" />
+                      </motion.div>
+                    </>
+                  )}
                 </motion.div>
 
                 {/* Title with Gradient Animation */}
                 <motion.h1
-                  className="text-5xl md:text-7xl font-black mb-4 bg-gradient-to-r from-yellow-400 via-purple-400 to-pink-400 bg-clip-text text-transparent leading-tight"
+                  className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 bg-gradient-to-r from-yellow-400 via-purple-400 to-pink-400 bg-clip-text text-transparent leading-tight"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4, duration: 0.6 }}
@@ -269,17 +289,6 @@ const Index = () => {
                 >
                   {profile?.full_name || "Anand Travel Agency"}
                 </motion.h1>
-
-                {profile?.business_name && (
-                  <motion.p
-                    className="text-2xl text-white/80 mb-6 font-light tracking-wide"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.5 }}
-                  >
-                    {profile.business_name}
-                  </motion.p>
-                )}
 
                 {/* Description with Typewriter Effect */}
                 <motion.p
@@ -309,25 +318,27 @@ const Index = () => {
                   />
                 </motion.div>
 
-                {/* Decorative Elements */}
-                <div className="flex gap-6 mt-8">
-                  {[Heart, Globe, Sparkles].map((Icon, index) => (
-                    <motion.div
-                      key={index}
-                      animate={{ 
-                        y: [0, -10, 0],
-                        rotate: [0, 10, -10, 0]
-                      }}
-                      transition={{ 
-                        duration: 3, 
-                        repeat: Infinity,
-                        delay: index * 0.3
-                      }}
-                    >
-                      <Icon className="w-6 h-6 text-white/40" />
-                    </motion.div>
-                  ))}
-                </div>
+                {/* Decorative Elements - desktop only */}
+                {!isMobile && (
+                  <div className="flex gap-6 mt-8">
+                    {[Heart, Globe, Sparkles].map((Icon, index) => (
+                      <motion.div
+                        key={index}
+                        animate={{ 
+                          y: [0, -10, 0],
+                          rotate: [0, 10, -10, 0]
+                        }}
+                        transition={{ 
+                          duration: 3, 
+                          repeat: Infinity,
+                          delay: index * 0.3
+                        }}
+                      >
+                        <Icon className="w-6 h-6 text-white/40" />
+                      </motion.div>
+                    ))}
+                  </div>
+                )}
               </div>
             </Card>
           </motion.div>
@@ -359,21 +370,31 @@ const Index = () => {
                 className="relative mb-10"
               >
                 <h3 className="text-3xl md:text-4xl font-bold text-center text-white/95 mb-2">
-                  <motion.span 
-                    className="inline-block mr-2"
-                    animate={{ rotate: [0, 15, -15, 0], scale: [1, 1.2, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-                  >
-                    ✨
-                  </motion.span>
-                  Connect With Us
-                  <motion.span 
-                    className="inline-block ml-2"
-                    animate={{ rotate: [0, -15, 15, 0], scale: [1, 1.2, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, repeatDelay: 3, delay: 0.2 }}
-                  >
-                    ✨
-                  </motion.span>
+                  {!isMobile ? (
+                    <>
+                      <motion.span 
+                        className="inline-block mr-2"
+                        animate={{ rotate: [0, 15, -15, 0], scale: [1, 1.2, 1] }}
+                        transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                      >
+                        ✨
+                      </motion.span>
+                      Connect With Us
+                      <motion.span 
+                        className="inline-block ml-2"
+                        animate={{ rotate: [0, -15, 15, 0], scale: [1, 1.2, 1] }}
+                        transition={{ duration: 2, repeat: Infinity, repeatDelay: 3, delay: 0.2 }}
+                      >
+                        ✨
+                      </motion.span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="mr-2">✨</span>
+                      Connect With Us
+                      <span className="ml-2">✨</span>
+                    </>
+                  )}
                 </h3>
                 <p className="text-center text-white/60 text-sm md:text-base">
                   Follow us on social media for exclusive travel deals & updates
@@ -402,31 +423,27 @@ const Index = () => {
                     <motion.button
                       key={link.id}
                       onClick={() => handleLinkClick(link)}
-                      className="group relative overflow-hidden rounded-2xl transition-all duration-300"
-                      initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                      className="group relative overflow-hidden rounded-2xl transition-all duration-300 active:scale-95 md:active:scale-100"
+                      initial={!isMobile ? { opacity: 0, scale: 0.8, y: 20 } : { opacity: 1, scale: 1, y: 0 }}
                       animate={{ opacity: 1, scale: 1, y: 0 }}
-                      transition={{ 
+                      transition={!isMobile ? { 
                         delay: 1 + index * 0.05,
                         duration: 0.4,
                         ease: [0.34, 1.56, 0.64, 1]
-                      }}
-                      whileHover={{ 
-                        y: -10,
-                        transition: { duration: 0.2 }
-                      }}
-                      whileTap={{ scale: 0.95 }}
+                      } : { duration: 0 }}
+                      whileTap={{ scale: 0.98 }}
                     >
                       {/* Base glass background */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-lg border border-white/20 rounded-2xl transition-all duration-300 group-hover:from-white/20 group-hover:to-white/10 group-hover:border-white/30" />
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-lg border border-white/20 rounded-2xl transition-all duration-200 md:duration-300 md:group-hover:from-white/20 md:group-hover:to-white/10 md:group-hover:border-white/30" />
                       
-                      {/* Platform-themed gradient overlay */}
-                      <div className={`absolute inset-0 bg-gradient-to-br ${colors.from} ${colors.to} rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+                      {/* Platform-themed gradient overlay - only on desktop */}
+                      <div className={`absolute inset-0 bg-gradient-to-br ${colors.from} ${colors.to} rounded-2xl opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 hidden md:block`} />
                       
-                      {/* Animated border glow */}
-                      <div className={`absolute -inset-0.5 rounded-2xl opacity-0 group-hover:opacity-75 transition-opacity duration-300 ${colors.glow} shadow-lg blur-sm`} />
+                      {/* Animated border glow - only on desktop */}
+                      <div className={`absolute -inset-0.5 rounded-2xl opacity-0 md:group-hover:opacity-75 transition-opacity duration-300 ${colors.glow} shadow-lg blur-sm hidden md:block`} />
                       
-                      {/* Shimmer effect */}
-                      <div className="absolute inset-0 rounded-2xl overflow-hidden">
+                      {/* Shimmer effect - disabled on mobile for better performance */}
+                      <div className="absolute inset-0 rounded-2xl overflow-hidden hidden md:block">
                         <motion.div
                           className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
                           initial={{ x: "-100%" }}
@@ -442,17 +459,10 @@ const Index = () => {
 
                       {/* Content */}
                       <div className="relative flex flex-col items-center gap-3 py-6 px-3 md:px-4">
-                        {/* Icon with scale animation */}
-                        <motion.div 
-                          className="transition-all duration-300"
-                          whileHover={{ 
-                            scale: 1.15,
-                            rotate: [0, -8, 8, 0],
-                            transition: { duration: 0.5 }
-                          }}
-                        >
+                        {/* Icon - no animations on mobile */}
+                        <div className="transition-all duration-300">
                           <SocialIcon platform={link.platform} size={40} />
-                        </motion.div>
+                        </div>
                         
                         {/* Label with gradient on hover */}
                         <span className="text-xs md:text-sm font-bold text-white/85 group-hover:text-white transition-all duration-300 text-center leading-tight">
@@ -460,8 +470,8 @@ const Index = () => {
                         </span>
                       </div>
 
-                      {/* Corner accent */}
-                      <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 group-hover:animate-ping" />
+                      {/* Corner accent - only on desktop */}
+                      <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-white/30 opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 md:group-hover:animate-ping hidden md:block" />
                     </motion.button>
                   );
                 })}
