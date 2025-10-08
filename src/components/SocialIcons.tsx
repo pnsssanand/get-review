@@ -95,31 +95,14 @@ export const SocialIcon = ({ platform, size = 24, className = "" }: SocialIconPr
       case "play store":
       case "playstore":
         return (
-          <svg {...iconProps} viewBox="0 0 24 24">
-            <defs>
-              <linearGradient id="playBlue" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style={{ stopColor: "#00D7FE" }} />
-                <stop offset="100%" style={{ stopColor: "#00A3E0" }} />
-              </linearGradient>
-              <linearGradient id="playGreen" x1="0%" y1="100%" x2="100%" y2="0%">
-                <stop offset="0%" style={{ stopColor: "#00E180" }} />
-                <stop offset="100%" style={{ stopColor: "#00C853" }} />
-              </linearGradient>
-              <linearGradient id="playYellow" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style={{ stopColor: "#FFEA00" }} />
-                <stop offset="100%" style={{ stopColor: "#FFC300" }} />
-              </linearGradient>
-              <linearGradient id="playRed" x1="100%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" style={{ stopColor: "#FF4B4B" }} />
-                <stop offset="100%" style={{ stopColor: "#E91E63" }} />
-              </linearGradient>
-            </defs>
-            {/* Main triangle shape divided into 4 colored sections */}
-            <path d="M3 2.5L12 12L3 21.5V2.5z" fill="url(#playBlue)"/>
-            <path d="M12 12L3 21.5L15.5 15L12 12z" fill="url(#playGreen)"/>
-            <path d="M15.5 9L12 12L15.5 15L20.5 12L15.5 9z" fill="url(#playYellow)"/>
-            <path d="M3 2.5L12 12L15.5 9L3 2.5z" fill="url(#playRed)"/>
-          </svg>
+          <img 
+            src="/playstore.png" 
+            alt="Play Store" 
+            width={size} 
+            height={size} 
+            className={className}
+            style={{ objectFit: 'contain' }}
+          />
         );
 
       case "tiktok":
@@ -138,24 +121,26 @@ export const SocialIcon = ({ platform, size = 24, className = "" }: SocialIconPr
 
       case "snapchat":
         return (
-          <svg {...iconProps} viewBox="0 0 24 24">
-            <defs>
-              <linearGradient id="snapGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" style={{ stopColor: "#FFFC00" }} />
-                <stop offset="100%" style={{ stopColor: "#FFF600" }} />
-              </linearGradient>
-            </defs>
-            <rect width="24" height="24" rx="5" fill="url(#snapGradient)" />
-            <path fill="#FFFFFF" stroke="#000000" strokeWidth="0.3" d="M12 5.5c1.4 0 2.5.4 3.3 1.1.7.6 1.1 1.5 1.2 2.6 0 .3 0 .5.1.8.4.2.8.4 1.2.5.2.1.3.2.4.3.1.2 0 .4-.1.5-.2.3-.6.5-1.2.6-.3.1-.6.1-.9.2-.1 0-.2 0-.3.1-.1 0-.2.1-.2.2-.1.5-.2 1-.4 1.4-.2.4-.4.7-.7.8-.2.1-.5.2-.8.2-.2 0-.4 0-.6-.1-.2-.1-.4-.1-.6-.2-.3-.1-.6-.2-1-.2-.3 0-.7.1-1 .2-.2.1-.4.1-.6.2-.2.1-.4.1-.6.1-.3 0-.6-.1-.8-.2-.3-.2-.5-.4-.7-.8-.2-.4-.3-.9-.4-1.4-.1-.1-.1-.2-.2-.2-.1-.1-.2-.1-.3-.1-.3-.1-.6-.1-.9-.2-.6-.1-1-.3-1.2-.6-.1-.1-.2-.3-.1-.5.1-.1.2-.2.4-.3.4-.1.8-.3 1.2-.5.1-.3.1-.5.1-.8.1-1.1.5-2 1.2-2.6C9.5 5.9 10.6 5.5 12 5.5zm0 1c-1.1 0-2 .3-2.6.8-.5.4-.8 1.1-.9 1.9 0 .4-.1.7-.2 1-.1.2-.3.4-.6.5-.2.1-.4.2-.6.3.2.1.5.2.8.2.3.1.6.1.8.2.3.1.5.3.6.5.1.2.2.5.3.8.1.5.3.9.5 1.2.1.2.3.3.4.4.1.1.3.1.5.1.1 0 .3 0 .4-.1.2 0 .3-.1.5-.2.3-.1.7-.2 1.1-.2.4 0 .8.1 1.1.2.2.1.3.1.5.2.1.1.3.1.4.1.2 0 .4 0 .5-.1.2-.1.3-.2.4-.4.2-.3.4-.7.5-1.2.1-.3.2-.6.3-.8.1-.2.3-.4.6-.5.2-.1.5-.1.8-.2.3-.1.6-.1.8-.2-.2-.1-.4-.2-.6-.3-.3-.1-.5-.3-.6-.5-.1-.3-.2-.6-.2-1-.1-.8-.4-1.5-.9-1.9-.6-.5-1.5-.8-2.6-.8z" />
-          </svg>
+          <img 
+            src="/snapchat.png" 
+            alt="Snapchat" 
+            width={size} 
+            height={size} 
+            className={className}
+            style={{ objectFit: 'contain' }}
+          />
         );
 
       case "threads":
         return (
-          <svg {...iconProps} viewBox="0 0 24 24">
-            <rect width="24" height="24" rx="5" fill="#000000" />
-            <path fill="#FFFFFF" d="M16.2 12c-.5-1.5-1.8-2.5-3.7-2.5-1.5 0-2.7.7-3.4 1.8-.2.3-.3.6-.4 1h1.8c.3-.7.9-1.2 1.9-1.2 1 0 1.6.4 1.9.9.2.3.3.6.2.9-.1.4-.4.7-1 .9l-1.2.3c-1.1.3-1.9.7-2.4 1.3-.5.6-.8 1.3-.8 2.1 0 .7.2 1.3.6 1.8.4.5.9.9 1.6 1.1.5.2 1.1.3 1.7.3 1 0 1.9-.3 2.6-.8.5-.4.9-.9 1.2-1.5v1.9h1.7v-5.4c0-1-.2-1.8-.6-2.4zm-3.2 5.5c-.7 0-1.3-.2-1.7-.6-.4-.4-.6-.8-.6-1.3 0-.6.2-1 .6-1.3.4-.3.9-.6 1.7-.8l1.2-.3c.3-.1.6-.2.9-.3v1c0 .7-.3 1.3-.7 1.8-.5.5-1.1.8-1.9.8h-.5z" />
-          </svg>
+          <img 
+            src="/threads.png" 
+            alt="Threads" 
+            width={size} 
+            height={size} 
+            className={className}
+            style={{ objectFit: 'contain' }}
+          />
         );
 
       default:
