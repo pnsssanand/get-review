@@ -1,0 +1,6 @@
+# Google Review QR Code Image
+
+The Google Review QR code image has been provided and should be saved to:
+`public/google-review-qr.png`
+
+Please save the attached image to this location for it to be displayed on the website.

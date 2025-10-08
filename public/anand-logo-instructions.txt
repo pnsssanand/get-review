@@ -1,0 +1,14 @@
+# Anand Travel Agency Logo
+
+The logo image has been provided and should be saved to:
+`public/anand-logo.png`
+
+Please save the attached logo image to this location for it to be displayed on the website.
+
+The logo features:
+- Blue airplane silhouette
+- "ANAND" text in large navy blue letters
+- "TRAVEL AGENCY" text below
+- Blue curved swoosh design
+- "TATKAL EXPERT" badge
+- Tagline: "...Your Journey, Our Expertise - Anywhere In India and Beyond"

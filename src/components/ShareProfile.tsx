@@ -23,9 +23,9 @@ export default function ShareProfile({
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  // Generate the profile URL based on type
-  const profileUrl = `${window.location.origin}/${profileType === 'business' ? 'business' : 'profile'}/${profileId}`;
-  const shareText = `Check out ${profileName} on Get Review!`;
+  // Generate the profile URL - use root URL for Anand Travel Agency
+  const profileUrl = window.location.origin;
+  const shareText = `Check out ${profileName} - Your trusted travel partner!`;
 
   // Copy link to clipboard
   const copyLink = async () => {
